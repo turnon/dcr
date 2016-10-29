@@ -2,8 +2,8 @@ require "dcr/version"
 
 module Dcr
   class << self
-    def instance klass, &decorator
-      org_method_name = parse_method_name(decorator)
+    def instance klass, org_method_name=nil, &decorator
+      org_method_name = parse_method_name(decorator) unless org_method_name
       unbound_org_method = klass.instance_method org_method_name
       klass.class_eval do
         define_method unbound_org_method.name do |*args|
@@ -13,8 +13,8 @@ module Dcr
       end
     end
 
-    def singleton object, &decorator
-      org_method_name = parse_method_name(decorator)
+    def singleton object, org_method_name=nil, &decorator
+      org_method_name = parse_method_name(decorator) unless org_method_name
       org_method = object.method org_method_name
       object.define_singleton_method org_method_name do |*args|
 	decorator.call org_method, *args
