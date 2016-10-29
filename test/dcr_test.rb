@@ -20,16 +20,6 @@ class DcrTest < Minitest::Test
     end
   end
 
-  class Bird
-    def fly
-      'fly'
-    end
-
-    def eat
-      'eat'
-    end
-  end
-
   def test_that_it_has_a_version_number
     refute_nil ::Dcr::VERSION
   end
@@ -96,35 +86,4 @@ class DcrTest < Minitest::Test
     assert_equal 'swimswim', fish.swim(2)
   end
 
-  def test_list_decorate_history_of_instance_method
-    bird = Bird.new
-    first_dcr = __LINE__ + 1
-    Dcr.instance Bird, :fly do |method|
-    end
-    second_dcr = __LINE__ + 1
-    Dcr.instance Bird, :fly do |method|
-    end
-    third_dcr = __LINE__ + 1
-    Dcr.instance Bird, :eat do |method|
-    end
-
-    assert_equal [[__FILE__, first_dcr], [__FILE__, second_dcr]], Dcr.list(Bird, :fly)
-    assert_equal [[__FILE__, third_dcr]], Dcr.list(Bird, :eat)
-  end
-
-  def test_list_decorate_history_of_singleton_method
-    bird = Bird.new
-    first_dcr = __LINE__ + 1
-    Dcr.singleton bird, :fly do |method|
-    end
-    second_dcr = __LINE__ + 1
-    Dcr.singleton bird, :fly do |method|
-    end
-    third_dcr = __LINE__ + 1
-    Dcr.singleton bird, :eat do |method|
-    end
-
-    assert_equal [[__FILE__, first_dcr], [__FILE__, second_dcr]], Dcr.list(bird, :fly)
-    assert_equal [[__FILE__, third_dcr]], Dcr.list(bird, :eat)
-  end
 end

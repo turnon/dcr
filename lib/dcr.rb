@@ -42,7 +42,7 @@ module Dcr
 
     def set_trace ko, name, method
       file, line, _ =  caller[1].split(':')
-      get_trace(ko, name) << [method, file, line.to_i]
+      get_trace(ko, name).unshift [method, file, line.to_i]
     end
 
     def get_trace ko, method
