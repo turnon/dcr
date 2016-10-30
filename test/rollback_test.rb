@@ -26,29 +26,29 @@ class RollbackTest < Minitest::Test
 
     rollbacked = Dcr.rollback_instance Bird, :fly
     assert rollbacked
-    assert_equal [[__FILE__, dcr_3], [__FILE__, dcr_2], [__FILE__, dcr_1]], Dcr.list(Bird, :fly)
+    assert_equal [[__FILE__, dcr_3], [__FILE__, dcr_2], [__FILE__, dcr_1]], Dcr.list_instance(Bird, :fly)
     assert_equal 3, bird.fly
 
     rollbacked = Dcr.rollback_instance Bird, :fly
     assert rollbacked
-    assert_equal [[__FILE__, dcr_2], [__FILE__, dcr_1]], Dcr.list(Bird, :fly)
+    assert_equal [[__FILE__, dcr_2], [__FILE__, dcr_1]], Dcr.list_instance(Bird, :fly)
     assert_equal 2, bird.fly
 
     rollbacked = Dcr.rollback_all_instance Bird, :fly
     assert rollbacked
-    assert_equal [], Dcr.list(Bird, :fly)
+    assert_equal [], Dcr.list_instance(Bird, :fly)
     assert_equal 'fly', bird.fly
 
     assert_raises(NoMethodError) do
       Dcr.rollback_instance Bird, :fly
     end
-    assert_equal [], Dcr.list(Bird, :fly)
+    assert_equal [], Dcr.list_instance(Bird, :fly)
     assert_equal 'fly', bird.fly
 
     assert_raises(NoMethodError) do
       Dcr.rollback_all_instance Bird, :fly
     end
-    assert_equal [], Dcr.list(Bird, :fly)
+    assert_equal [], Dcr.list_instance(Bird, :fly)
     assert_equal 'fly', bird.fly
   end
 
@@ -67,29 +67,29 @@ class RollbackTest < Minitest::Test
 
     rollbacked = Dcr.rollback_singleton bird, :eat
     assert rollbacked
-    assert_equal [[__FILE__, dcr_3], [__FILE__, dcr_2], [__FILE__, dcr_1]], Dcr.list(bird, :eat)
+    assert_equal [[__FILE__, dcr_3], [__FILE__, dcr_2], [__FILE__, dcr_1]], Dcr.list_singleton(bird, :eat)
     assert_equal 3, bird.eat
 
     rollbacked = Dcr.rollback_singleton bird, :eat
     assert rollbacked
-    assert_equal [[__FILE__, dcr_2], [__FILE__, dcr_1]], Dcr.list(bird, :eat)
+    assert_equal [[__FILE__, dcr_2], [__FILE__, dcr_1]], Dcr.list_singleton(bird, :eat)
     assert_equal 2, bird.eat
 
     rollbacked = Dcr.rollback_all_singleton bird, :eat
     assert rollbacked
-    assert_equal [], Dcr.list(bird, :eat)
+    assert_equal [], Dcr.list_singleton(bird, :eat)
     assert_equal 'eat', bird.eat
 
     assert_raises(NoMethodError) do
       Dcr.rollback_singleton bird, :eat
     end
-    assert_equal [], Dcr.list(bird, :eat)
+    assert_equal [], Dcr.list_singleton(bird, :eat)
     assert_equal 'eat', bird.eat
 
     assert_raises(NoMethodError) do
       Dcr.rollback_all_ingleton bird, :eat
     end
-    assert_equal [], Dcr.list(bird, :eat)
+    assert_equal [], Dcr.list_singleton(bird, :eat)
     assert_equal 'eat', bird.eat
   end
 

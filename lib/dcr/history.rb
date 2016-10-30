@@ -3,8 +3,8 @@ module Dcr
 
     class << self
       def of obj
-        ko.instance_variable_set(ivar, new(obj)) unless ko.instance_variable_defined? ivar
-	ko.instance_variable_get ivar
+        obj.instance_variable_set(ivar, new(obj)) unless obj.instance_variable_defined? ivar
+	obj.instance_variable_get ivar
       end
     end
 
@@ -24,8 +24,14 @@ module Dcr
     end
 
     def add_to_track method
-      file, line, _ =  caller[1].split(':')
+      file, line, _ =  caller_not_from_dcr.split(':')
       track[method.name] << [method, file, line.to_i]
+    end
+
+    def caller_not_from_dcr
+      caller.find do |file|
+	file !~ /dcr\/lib/
+      end
     end
 
     def pop_last_track method_name

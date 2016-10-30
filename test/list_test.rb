@@ -26,8 +26,8 @@ class ListTest < Minitest::Test
     Dcr.instance Bird, :eat do |method|
     end
 
-    assert_equal [[__FILE__, dcr_3], [__FILE__, dcr_2], [__FILE__, dcr_1]], Dcr.list(Bird, :fly)
-    assert_equal [[__FILE__, dcr_4]], Dcr.list(Bird, :eat)
+    assert_equal [[__FILE__, dcr_3], [__FILE__, dcr_2], [__FILE__, dcr_1]], Dcr.list_instance(Bird, :fly)
+    assert_equal [[__FILE__, dcr_4]], Dcr.list_instance(Bird, :eat)
   end
 
   def test_list_decorate_history_of_singleton_method
@@ -45,8 +45,8 @@ class ListTest < Minitest::Test
     Dcr.singleton bird, :eat do |method|
     end
 
-    assert_equal [[__FILE__, idcr_3], [__FILE__, idcr_2], [__FILE__, idcr_1]], Dcr.list(bird, :fly)
-    assert_equal [[__FILE__, idcr_4]], Dcr.list(bird, :eat)
+    assert_equal [[__FILE__, idcr_3], [__FILE__, idcr_2], [__FILE__, idcr_1]], Dcr.list_singleton(bird, :fly)
+    assert_equal [[__FILE__, idcr_4]], Dcr.list_singleton(bird, :eat)
   end
 
 end
