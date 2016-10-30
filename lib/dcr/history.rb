@@ -23,9 +23,9 @@ module Dcr
         end
     end
 
-    def add_to_track method
+    def add_to_track method, name=nil
       file, line, _ =  caller_not_from_dcr.split(':')
-      track[method.name] << [method, file, line.to_i]
+      track[name || method.name] << [method, file, line.to_i]
     end
 
     def caller_not_from_dcr
