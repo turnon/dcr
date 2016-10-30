@@ -4,7 +4,7 @@ module Dcr
     class << self
       def of obj
         obj.instance_variable_set(ivar, new(obj)) unless obj.instance_variable_defined? ivar
-	obj.instance_variable_get ivar
+        obj.instance_variable_get ivar
       end
     end
 
@@ -17,9 +17,9 @@ module Dcr
 
     def list method_name
       track[method_name].
-	reverse_each.
-	map do |method, file, line|
-	  [file, line]
+        reverse_each.
+        map do |method, file, line|
+          [file, line]
         end
     end
 
@@ -30,7 +30,7 @@ module Dcr
 
     def caller_not_from_dcr
       caller.find do |file|
-	file !~ /dcr\/lib/
+        file !~ /dcr\/lib/
       end
     end
 
@@ -49,7 +49,7 @@ module Dcr
     def warn_if_no_org_methods method_name
       methods = track[method_name]
       raise NoMethodError,
-	"no more history for method: #{method_name}" if methods.empty?
+        "no more history for method: #{method_name}" if methods.empty?
     end
 
   end

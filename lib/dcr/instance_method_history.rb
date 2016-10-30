@@ -14,12 +14,12 @@ module Dcr
       unbound_org_method = klass.instance_method method_name
 
       new_method = lambda do |*args|
-	bound_method = unbound_org_method.bind self
-	decorator.call bound_method, *args
+        bound_method = unbound_org_method.bind self
+        decorator.call bound_method, *args
       end
 
       klass.class_eval do
-	define_method method_name, &new_method
+        define_method method_name, &new_method
       end
 
       add_to_track unbound_org_method
