@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class HistoryTest < Minitest::Test
+class ListTest < Minitest::Test
 
   class Bird
     def fly
