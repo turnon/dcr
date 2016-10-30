@@ -1,4 +1,6 @@
-require "dcr/version"
+require 'dcr/version'
+require 'dcr/instance_method_history'
+require 'dcr/singleton_method_history'
 
 module Dcr
 
@@ -26,8 +28,8 @@ module Dcr
       hist.list method_name
     end
 
-    def list_singleton klass, method_name
-      hist = SingletonMethodHistory.of klass
+    def list_singleton object, method_name
+      hist = SingletonMethodHistory.of object
       hist.list method_name
     end
 
