@@ -24,5 +24,15 @@ module Dcr
 
       add_to_track unbound_org_method
     end
+
+    def rollback method_name
+      org_method = pop_last_track method_name
+      klass.send :define_method, method_name, org_method
+    end
+
+    def rollback_all method_name
+      org_method = pop_all_track method_name
+      klass.send :define_method, method_name, org_method
+    end
   end
 end

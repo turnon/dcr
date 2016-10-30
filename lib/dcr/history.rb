@@ -16,14 +16,34 @@ module Dcr
     end
 
     def list method_name
-      track[method_name].map do |method, file, line|
-	[file, line]
-      end
+      track[method_name].
+	reverse_each.
+	map do |method, file, line|
+	  [file, line]
+        end
     end
 
     def add_to_track method
       file, line, _ =  caller[1].split(':')
-      track[method.name].unshift [method, file, line.to_i]
+      track[method.name] << [method, file, line.to_i]
+    end
+
+    def pop_last_track method_name
+      warn_if_no_org_methods method_name
+      track[method_name].pop[0]
+    end
+
+    def pop_all_track method_name
+      warn_if_no_org_methods method_name
+      oldest_method = track[method_name].shift[0]
+      track[method_name].clear
+      oldest_method
+    end
+
+    def warn_if_no_org_methods method_name
+      methods = track[method_name]
+      raise NoMethodError,
+	"no more history for method: #{method_name}" if methods.empty?
     end
 
   end

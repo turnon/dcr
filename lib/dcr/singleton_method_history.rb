@@ -17,8 +17,17 @@ module Dcr
 
       object.define_singleton_method method_name, &new_method
 
-      file, line, _ =  caller[0].split(':')
-      track[method_name].unshift [org_method, file, line.to_i]
+      add_to_track org_method
+    end
+
+    def rollback method_name
+      org_method = pop_last_track method_name
+      object.define_singleton_method method_name, org_method
+    end
+
+    def rollback_all method_name
+      org_method = pop_all_track method_name
+      object.define_singleton_method method_name, org_method
     end
   end
 end
