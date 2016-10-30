@@ -2,7 +2,7 @@ require "dcr/version"
 
 module Dcr
 
-  History = :@_dcr_history
+  HistoryId = :@_dcr_history
 
   class << self
 
@@ -46,8 +46,8 @@ module Dcr
     end
 
     def get_history ko, method_name
-      ko.instance_variable_set(History, {}) unless ko.instance_variable_defined? History
-      history = ko.instance_variable_get History
+      ko.instance_variable_set(HistoryId, {}) unless ko.instance_variable_defined? HistoryId
+      history = ko.instance_variable_get HistoryId
       history[method_name] ||= []
     end
 
