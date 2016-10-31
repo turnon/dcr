@@ -30,7 +30,7 @@ module Dcr
 
     def caller_not_from_dcr
       caller.find do |file|
-        file !~ /dcr\/lib/
+        file !~ /dcr-.*\/lib\/dcr/
       end
     end
 
