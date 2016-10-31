@@ -53,5 +53,14 @@ module Dcr
       hist.rollback_all method_name
     end
 
+    alias_method :ins, :instance
+    alias_method :sin, :singleton
+    alias_method :ls_ins, :list_instance
+    alias_method :ls_sin, :list_singleton
+    alias_method :rb_ins, :rollback_instance
+    alias_method :rb_all_ins, :rollback_all_instance
+    alias_method :rb_sin, :rollback_singleton
+    alias_method :rb_all_sin, :rollback_all_singleton
+
   end
 end
