@@ -20,6 +20,27 @@ class DcrTest < Minitest::Test
     end
   end
 
+  class Snake
+    def crawl &blk
+      return blk.call if block_given?
+      'crawl'
+    end
+  end
+
+  class Crocodile
+    def crawl &blk
+      return blk.call if block_given?
+      'crawl'
+    end
+  end
+
+  class Earthworm
+    def crawl &blk
+      return blk.call if block_given?
+      'crawl'
+    end
+  end
+
   def test_that_it_has_a_version_number
     refute_nil ::Dcr::VERSION
   end
@@ -86,4 +107,35 @@ class DcrTest < Minitest::Test
     assert_equal 'swimswim', fish.swim(2)
   end
 
+  def test_decorate_instance_method_which_has_block
+    snake = Snake.new
+    Dcr.instance Snake, :crawl do |method|
+      method.call{'creep'}
+    end
+    assert_equal 'creep', snake.crawl
+  end
+
+  def test_decorate_instance_method_which_has_block_and_pass_through_block
+    crocodile = Crocodile.new
+    Dcr.instance Crocodile, :crawl do |method, &blk|
+      method.call {blk.call}
+    end
+    assert_equal 'creep', crocodile.crawl{'creep'}
+  end
+
+  def test_decorate_singleton_method_which_has_block
+    earthworm = Earthworm.new
+    Dcr.singleton earthworm, :crawl do |method|
+      method.call{'creep'}
+    end
+    assert_equal 'creep', earthworm.crawl
+  end
+
+  def test_decorate_singleton_method_which_has_block_and_pass_through_block
+    earthworm = Earthworm.new
+    Dcr.singleton earthworm, :crawl do |method, &blk|
+      method.call &blk
+    end
+    assert_equal 'creep', earthworm.crawl{'creep'}
+  end
 end

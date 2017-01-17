@@ -11,8 +11,8 @@ module Dcr
     def commit method_name, &decorator
       org_method = from_superclass_or_self object, method_name
 
-      new_method = lambda do |*args|
-        decorator.call org_method, *args
+      new_method = lambda do |*args, &blk|
+        decorator.call org_method, *args, &blk
       end
 
       object.define_singleton_method method_name, &new_method
@@ -32,9 +32,9 @@ module Dcr
 
     def from_superclass_or_self object, method_name
       if track[method_name].empty?
-        lambda do |*args|
+        lambda do |*args, &blk|
           m = object.class.ancestors[0].instance_method method_name
-          m.bind(object).call *args
+          m.bind(object).call *args, &blk
         end
       else
         object.method method_name

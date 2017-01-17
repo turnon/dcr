@@ -13,9 +13,9 @@ module Dcr
     def commit method_name, &decorator
       unbound_org_method = klass.instance_method method_name
 
-      new_method = lambda do |*args|
+      new_method = lambda do |*args, &blk|
         bound_method = unbound_org_method.bind self
-        decorator.call bound_method, *args
+        decorator.call bound_method, *args, &blk
       end
 
       klass.class_eval do
